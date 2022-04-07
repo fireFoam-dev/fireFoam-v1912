@@ -1,0 +1,18 @@
+#----------------------------*- makefile-gmake -*------------------------------
+#
+# this file must be placed in $WM_DIR/rules/General/ and added to $WM_DIR/rules/General/standard as following (without the leading hash comment):
+#include $(GENERAL_RULES)/version2  
+
+SUFFIXES += .Fver
+
+# Update version strings in C++ file and in $WM_PROJECT_DIR/.build file
+Fvertoo = \
+    sed -e 's/FIRE_FOAM_SHA1/$(shell git rev-parse HEAD)/' \
+        -e 's/FIRE_FOAM_BUILD_TIME/$(shell date)/' \
+        $< > version.C; \
+    $(CC) $(c++FLAGS) -c version.C -o $@; \
+    sleep 0;touch -t `./datecalc 2` version.Fver #*.Fver # force update each time run
+
+.Fver.dep:
+    $(MAKE_DEP)
+#------------------------------------------------------------------------------

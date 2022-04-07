@@ -1,0 +1,3 @@
+derivedFvPatchFields/filmPyrolysisTemperatureCoupledFF/filmPyrolysisTemperatureCoupledFFFvPatchScalarField.C
+
+LIB = $(FOAM_USER_LIBBIN)/libregionCouplingFF

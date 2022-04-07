@@ -1,0 +1,22 @@
+species
+(
+    v
+);
+
+gaseousSpecies
+(
+    gas
+);
+
+reactions
+{
+    pmmaReaction
+    {
+        type        irreversibleArrheniusSolidReaction;
+        reaction    "v =  gas";
+        A           0.0;
+        Ta          22161;
+        Tcrit       4000;
+    }
+}
+

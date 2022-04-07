@@ -1,0 +1,576 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  dev                                   |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     fireFoam;
+
+startFrom       startTime;
+
+startTime       0.0;
+
+stopAt          endTime;
+
+endTime         60.0;
+
+deltaT          0.001;
+
+writeControl    adjustableRunTime;
+
+writeInterval   5.0;
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  6;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+graphFormat     raw;
+
+runTimeModifiable yes;
+
+adjustTimeStep  yes;
+
+maxCo           0.9;
+
+maxDeltaT       0.005;
+
+functions
+{
+    HRR
+    {
+        type            volFieldValue;
+        libs ("libfieldFunctionObjects.so");
+        enabled         true;
+        writeControl    timeStep;  
+        writeInterval   100;
+        log             false;     
+        writeFields     false;
+        regionType      all;       
+        name            c0;
+        operation       volIntegrate;
+        fields
+        (
+            Qdot
+        );
+    }
+
+    fieldMinMax
+    {
+        type            fieldMinMax;
+        libs ("libfieldFunctionObjects.so");
+        enabled         true;
+        writeControl    timeStep;
+        writeInterval   100;
+        mode            magnitude;
+        log             false;
+        writeFields     false;
+        fields
+        (
+            T
+            U
+            Qdot
+        );
+    }
+
+    fieldAverage
+    {
+        type            fieldAverage;
+        libs ( "libfieldFunctionObjects.so" );
+        enabled         true;
+        writeControl   adjustableRunTime;
+        writeInterval   5.0;
+        restartOnRestart false;
+        restartOnOutput   false;
+        periodicRestart true;
+        periodicRestart false;
+        //restartPeriod   10.0;
+        timeStart               20.0;
+        timeEnd                 60.0;
+
+
+        fields
+        (
+            T
+            {
+                mean        on;
+                prime2Mean  on;
+                base        time;
+            }
+
+            U
+            {
+                mean        on;
+                prime2Mean  on;
+                base        time;
+            }
+
+            Qdot
+            {
+                mean        on;
+                prime2Mean  on;
+                base        time;
+            }
+            phi
+            {
+                mean        on;
+                prime2Mean  on;
+                base        time;
+            }
+            phiH
+            {
+                mean        on;
+                prime2Mean  on;
+                base        time;
+            }
+            phiHc
+            {
+                mean        on;
+                prime2Mean  on;
+                base        time;
+            }
+            phiHs
+            {
+                mean        on;
+                prime2Mean  on;
+                base        time;
+            }            
+        );
+    }
+
+    
+    xyPlane
+    {
+        type surfaces;
+
+        libs ("libsampling.so");
+        enabled         true;
+        writeControl    adjustableRunTime;
+        writeInterval   0.5;
+        interpolationScheme cell;
+        surfaceFormat vtk;
+
+        // Fields to be sampled
+        fields
+        (
+            T
+            U
+            p_rgh
+            k
+            UMean
+            TMean
+        );
+
+        surfaces
+        (
+	 // xz plane
+            verticalPlaneX
+            {
+                type cuttingPlane;
+                planeType pointAndNormal;
+                pointAndNormalDict
+                {
+                    point       (0 0 0.);
+                    normal    (0 1 0);
+                }
+                interpolate     true;
+            }
+	// yz plane
+            verticalPlaneY
+            {
+                type cuttingPlane;
+                planeType pointAndNormal;
+                pointAndNormalDict
+                {
+                    point       (0 0 0.);
+                    normal    (1 0 0);
+                }
+                interpolate     true;
+            }
+
+        );
+    }
+
+
+    lines_z
+    {
+        type sets;
+
+         libs ("libsampling.so");
+
+         // outputControl   outputTime;
+         writeControl   adjustableRunTime;
+         writeInterval   5.0;
+         setFormat       raw;
+         fields          (T U TMean UMean TPrime2Mean UPrime2Mean);
+         interpolationScheme cell;
+         sets
+         (
+            z_3
+            {
+                type midPoint;
+
+                axis z;
+                start (  0  0 0. );
+                end   (  0  0 3. );
+            }
+         );
+    }
+
+//z planes
+    plane_zref
+    {
+        libs ("libfieldFunctionObjects.so");
+        type surfaceFieldValue;
+        enabled         true;
+        writeControl    adjustableRunTime;
+        writeInterval   20.0;
+        operation       sum;
+        writeFields     false;
+        regionType      faceZone;
+        name            plane_z0.1;
+
+        fields
+        (
+            phi
+            phiMean
+            phiH
+            phiHc
+            phiHs
+            phiHMean
+            phiHcMean
+            phiHsMean            
+        );
+    }                    
+    plane_z0
+    {
+        $plane_zref;
+        name    plane_z0;
+        regionType      patch;
+        name            inlet;
+    }
+    plane_z0.1
+    {
+        $plane_zref;
+    }                    
+    plane_z0.2
+    {
+        $plane_zref;
+        name    plane_z0.2;    
+    }                    
+    plane_z0.3
+    {
+        $plane_zref;
+        name    plane_z0.3;    
+    }                    
+    plane_z0.4
+    {
+        $plane_zref;
+        name    plane_z0.4;    
+    }                    
+    plane_z0.5
+    {
+        $plane_zref;
+        name    plane_z0.5;    
+    }                    
+    plane_z0.6
+    {
+        $plane_zref;
+        name    plane_z0.6;    
+    }                    
+    plane_z0.7
+    {
+        $plane_zref;
+        name    plane_z0.7;    
+    }                    
+    plane_z0.8
+    {
+        $plane_zref;
+        name    plane_z0.8;    
+    }                    
+    plane_z0.9
+    {
+        $plane_zref;
+        name    plane_z0.9;    
+    }                    
+    plane_z1.0
+    {
+        $plane_zref;
+        name    plane_z1.0;
+    }                    
+    plane_z1.1
+    {
+        $plane_zref;
+        name    plane_z1.1;
+    }                    
+    plane_z1.2
+    {
+        $plane_zref;
+        name    plane_z1.2;
+    }                    
+    plane_z1.3
+    {
+        $plane_zref;
+        name    plane_z1.3;
+    }                    
+    plane_z1.4
+    {
+        $plane_zref;
+        name    plane_z1.4;
+    }                    
+    plane_z1.5
+    {
+        $plane_zref;
+        name    plane_z1.5;
+    }                    
+    plane_z1.6
+    {
+        $plane_zref;
+        name    plane_z1.6;
+    }                    
+    plane_z1.7
+    {
+        $plane_zref;
+        name    plane_z1.7;
+    }                    
+    plane_z1.8
+    {
+        $plane_zref;
+        name    plane_z1.8;
+    }                    
+    plane_z1.9
+    {
+        $plane_zref;
+        name    plane_z1.9;
+    }                    
+    plane_z2.0
+    {
+        $plane_zref;
+        name    plane_z2.0;
+    }                    
+    plane_z2.1
+    {
+        $plane_zref;
+        name    plane_z2.1;
+    }                    
+    plane_z2.2
+    {
+        $plane_zref;
+        name    plane_z2.2;
+    }                    
+    plane_z2.3
+    {
+        $plane_zref;
+        name    plane_z2.3;
+    }                    
+    plane_z2.4
+    {
+        $plane_zref;
+        name    plane_z2.4;
+    }                    
+    plane_z2.5
+    {
+        $plane_zref;
+        name    plane_z2.5;
+    }                    
+    plane_z2.6
+    {
+        $plane_zref;
+        name    plane_z2.6;
+    }                    
+    plane_z2.7
+    {
+        $plane_zref;
+        name    plane_z2.7;
+    }                    
+    plane_z2.8
+    {
+        $plane_zref;
+        name    plane_z2.8;
+    }                    
+    plane_z2.9
+    {
+        $plane_zref;
+        name    plane_z2.9;
+    }                    
+    plane_z3.0
+    {
+        $plane_zref;
+        name    plane_z3.0;
+        regionType      patch;
+        name            outlet;
+    }                    
+//side planes
+    sideplane_z0.1
+    {
+        $plane_zref;
+        name            sideplane_z0.1;
+    }
+    sideplane_z0.2
+    {
+        $plane_zref;
+        name            sideplane_z0.2;
+    }
+    sideplane_z0.3
+    {
+        $plane_zref;
+        name            sideplane_z0.3;
+    }
+    sideplane_z0.4
+    {
+        $plane_zref;
+        name            sideplane_z0.4;
+    }       
+    sideplane_z0.5
+    {
+        $plane_zref;
+        name            sideplane_z0.5;
+    }             
+    sideplane_z0.6
+    {
+        $plane_zref;
+        name            sideplane_z0.6;
+    }             
+    sideplane_z0.7
+    {
+        $plane_zref;
+        name            sideplane_z0.7;
+    }
+    sideplane_z0.8
+    {
+        $plane_zref;
+        name            sideplane_z0.8;
+    }       	
+    sideplane_z0.9
+    {
+        $plane_zref;
+        name            sideplane_z0.9;
+    }
+    sideplane_z1.0
+    {
+        $plane_zref;
+        name            sideplane_z1.0;
+    }
+    sideplane_z1.1
+    {
+        $plane_zref;
+        name            sideplane_z1.1;
+    }    
+    sideplane_z1.2
+    {
+        $plane_zref;
+        name            sideplane_z1.2;
+    }        
+    sideplane_z1.3
+    {
+        $plane_zref;
+        name            sideplane_z1.3;
+    }    
+    sideplane_z1.4
+    {
+        $plane_zref;
+        name            sideplane_z1.4;
+    }    
+    sideplane_z1.5
+    {
+        $plane_zref;
+        name            sideplane_z1.5;
+    }        
+    sideplane_z1.6
+    {
+        $plane_zref;
+        name            sideplane_z1.6;
+    }        
+    sideplane_z1.7
+    {
+        $plane_zref;
+        name            sideplane_z1.7;
+    }        
+    sideplane_z1.8
+    {
+        $plane_zref;
+        name            sideplane_z1.8;
+    }        
+    sideplane_z1.9
+    {
+        $plane_zref;
+        name            sideplane_z1.9;
+    }    
+    sideplane_z2.0
+    {
+        $plane_zref;
+        name            sideplane_z2.0;
+    }        
+    sideplane_z2.1
+    {
+        $plane_zref;
+        name            sideplane_z2.1;
+    }      
+    sideplane_z2.2
+    {
+        $plane_zref;
+        name            sideplane_z2.2;
+    }
+    sideplane_z2.3
+    {
+        $plane_zref;
+        name            sideplane_z2.3;
+    }     
+    sideplane_z2.4
+    {
+        $plane_zref;
+        name            sideplane_z2.4;
+    }           
+    sideplane_z2.5
+    {
+        $plane_zref;
+        name            sideplane_z2.5;
+    }            
+    sideplane_z2.6
+    {
+        $plane_zref;
+        name            sideplane_z2.6;
+    }            
+    sideplane_z2.7
+    {
+        $plane_zref;
+        name            sideplane_z2.7;
+    }            
+    sideplane_z2.8
+    {
+        $plane_zref;
+        name            sideplane_z2.8;
+    }            
+    sideplane_z2.9
+    {
+        $plane_zref;
+        name            sideplane_z2.9;
+    }        
+    sideplane_z3.0
+    {
+        $plane_zref;
+        name            sideplane_z3.0;
+    }            
+
+
+}
+
+// ************************************************************************* //

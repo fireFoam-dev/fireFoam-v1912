@@ -1,0 +1,34 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  | =========                 |                                                 |
+  | \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+  |  \\    /   O peration     | Version:  dev                                   |
+  |   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+  |    \\/     M anipulation  |                                                 |
+  \*---------------------------------------------------------------------------*/
+FoamFile
+{
+	version     2.0;
+	format      ascii;
+	class       IOobject;
+	location    "constant";
+	object      reactions;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+species
+(
+    CH4
+    O2
+    N2
+    CO2
+    H2O
+);
+
+reactions
+{
+    methaneReaction
+    {
+        type irreversibleinfiniteReaction;
+        reaction "CH4 + 2O2 + 7.52N2 = CO2 + 2H2O + 7.52N2";
+    }
+}

@@ -1,0 +1,14 @@
+fixedIncidentRadiationCoupledMixed/fixedIncidentRadiationCoupledMixedFvPatchScalarField.C
+
+fixedIncidentRadiation/fixedIncidentRadiationFvPatchScalarField.C
+
+
+flowRateInletVelocityFuelConvertCoupled/flowRateInletVelocityFuelConvertCoupledFvPatchVectorField.C
+
+flowRateInletVelocityPyrolysisCoupled/flowRateInletVelocityPyrolysisCoupledFvPatchVectorField.C
+
+corrugatedCardboardFreeburn/corrugatedCardboardFreeburnFvPatchScalarField.C
+
+
+LIB = $(FOAM_USER_LIBBIN)/libfvPatchFieldsPyrolysis
+

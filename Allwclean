@@ -1,0 +1,7 @@
+#!/bin/sh -u
+cd ${0%/*} || exit 1    # run from this directory
+set -x
+
+./fireFoam/Allwclean
+
+# ----------------------------------------------------------------- end-of-file

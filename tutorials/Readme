@@ -1,0 +1,77 @@
+Case: poolfireMcCaffrey
+========================
+
+58kW methane gas pool fire from McCaffrey's experiments. Simuation described in:
+
+[1] https://github.com/MaCFP/macfp-db/tree/master/Gaseous_Pool_Fires/McCaffrey_Flames/Computational_Results/2017/FMGlobal
+
+[2] Y. Wang, P. Chatterjee, J.L. de Ris, Large Eddy Simuulation of Fire Plumes, Proc. Combust. Inst. (2011)
+    DOI: 10.1016/j.proci.2010.07.031
+
+
+Case: burningBoxSuppression
+================================
+
+Configuration: 
+
+        
+             o          <------ Sprinkler
+            /|\
+           / | \        <------ Spray
+          /  |  \
+
+          -------
+         |       |
+         |       |      <------ Cardboard box
+         |       |
+          -------
+
+
+
+          -------
+         |       |
+         |       |      <------ Cardboard box
+         |       |
+        ^ ------- ^
+        ^^^^^^^^^^^
+           ^^^^^
+            ^^^
+            ^^^         <------ Burner flame
+            ^^^
+            ^^^
+        ====^^^====     <------ Ground
+        
+             ^
+             |
+             |
+           Burner  
+
+   
+Description:
+
+
+    Two cardboard boxes floating above ground
+
+    Each box is 20 inch cube
+
+    Burner centered in ground and beneath box, ~110kW
+
+    Injector centered above box, 0.1 kg/s
+
+    Order of events:
+
+    * START
+    * 0  s    : burner on
+    * 90 s    : injector on
+    * END
+
+Purpose of case:
+
+    Demonstrate coupling between:
+
+        - Pyrolysis
+        - Combustion
+        - Radiation
+        - Spray
+        - Film
+

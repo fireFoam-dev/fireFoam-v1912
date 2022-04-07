@@ -1,0 +1,61 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v1806                                 |
+|   \\  /    A nd           | Web:      http://www.OpenFOAM.com               |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0/pyrolysisRegion";
+    object      T;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 0 1 0 0 0];
+
+internalField   uniform 298;
+
+boundaryField
+{
+    fuel_top
+    {
+        //type            zeroGradient; 
+        // use constHTemperature to avoid the infamous 
+        // 'second peak' in the HRR as the material burns out
+        type            constHTemperature;
+        value           uniform 293;
+        Tinf            uniform 293;
+        h               uniform 10;
+    }
+
+    region0_to_fuelRegion_fuel
+    {
+        type                compressible::corrugatedCardboardSuppression;
+        filmRegion          filmRegion;
+        pyrolysisRegion     fuelRegion;
+        Tnbr                T;
+        K                   K;
+        kappaMethod         solidThermo;
+        Qr                  Qr;
+        kappaName           none;
+        emissivityMode      solidRadiation;
+        neighbourFieldRadiativeName     qin;
+        neighbourFieldConvectiveName    convectiveHeatFlux_T;
+        fieldRadiativeName  none;
+        fieldConvectiveName none;
+        filmDeltaDry        0.0;
+        filmDeltaWet        3e-4;
+        qExtra              0.0;
+        value               $internalField;
+    }
+
+    oneDEmptyPatch
+    {
+        type            empty;
+    }
+}
+// ************************************************************************* //

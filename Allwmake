@@ -1,0 +1,12 @@
+#!/bin/bash
+cd ${0%/*} || exit 1    # run from this directory
+. $WM_PROJECT_DIR/wmake/scripts/AllwmakeParseArguments
+
+#rm -fr ${FOAM_USER_LIBBIN}/lib*.so
+
+set -x
+
+./fireFoam/Allwmake
+
+
+# ----------------------------------------------------------------- end-of-file

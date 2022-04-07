@@ -1,0 +1,25 @@
+The following is an outline of the steps to install OpenFOAM and fireFoam
+Adaptation will likely be needed for specifics of your architecture and compiler
+
+cd ~
+mkdir OpenFOAM
+cd OpenFOAM/
+git clone https://develop.openfoam.com/Development/openfoam.git OpenFOAM-v1912
+cd OpenFOAM-v1912/
+git checkout 49e63378f82863f1fc56c5c6b4f0e1856b2035e9
+source etc/bashrc
+
+cd ~/OpenFOAM
+wget https://sourceforge.net/projects/openfoam/files/v1912/ThirdParty-v1912.tgz
+tar -zxvf ThirdParty-v1912.tgz
+rm -fr ThirdParty-v1912.tgz
+cd ThirdParty-v1912
+./Allwmake -j > log.Allwmake 2> err.Allwmake &
+
+cd ~/OpenFOAM/OpenFOAM-v1912
+./Allwmake -j > log.Allwmake 2> err.Allwmake &
+
+cd ~/OpenFOAM
+git clone https://github.com/fireFoam-release/v1912.git
+cd fireFoam-v1912
+./Allwmake -j > log.Allwmake 2> err.Allwmake &

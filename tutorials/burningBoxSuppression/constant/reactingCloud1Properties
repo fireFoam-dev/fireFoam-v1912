@@ -1,0 +1,207 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.4.x                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      reactingCloud1Properties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+solution
+{
+    active          true;
+    coupled         true; // true;
+    transient       yes;
+    cellValueSourceCorrection on;
+    //maxCo           100000;
+
+    sourceTerms
+    {
+        schemes
+        {
+            rho             explicit 1;
+            U               explicit 1;
+            Yi              explicit 1;
+            h               explicit 1;
+            radiation       explicit 1;
+        }
+    }
+
+    interpolationSchemes
+    {
+        rho             cell;
+        U               cellPoint;
+        thermo:mu       cell;
+        kappa           cell;
+        T               cell;
+        Cp              cell;
+        p               cell;
+    }
+
+    integrationSchemes
+    {
+        U               Euler;
+        T               analytical;
+    }
+
+}
+
+
+constantProperties
+{
+
+    parcelTypeId    1;
+
+    rhoMin          1e-18;
+    TMin            200;
+    TMax            800;
+    pMin            1000;
+    minParcelMass   1e-11;
+
+    rho0            1000;
+    T0              300;
+    Cp0             3100;
+
+    youngsModulus   1e9;
+    poissonsRatio   0.35;
+
+    epsilon0        1;
+    f0              0.5;
+    Pr              0.7;
+    Tvap            273;
+    Tbp             720; 
+
+    constantVolume  false;
+}
+
+subModels
+{
+    injectionModels
+    {
+        model1
+        {
+            type            coneInjection;
+            SOI             90;
+            duration        240;
+            positionAxis
+            (
+                ((0 0 2.54) (0 0 -1))
+            );
+
+            massTotal       50;
+            parcelsPerInjector 20000;
+            parcelBasisType mass;
+            flowRateProfile constant 0.1;
+            Umag            constant 2.0;
+            thetaInner      constant 0;
+            thetaOuter      constant 20;
+
+            sizeDistribution
+            {
+                type         RosinRammler;
+                RosinRammlerDistribution
+                {
+                    minValue        5e-04;
+                    maxValue        0.003;
+                    d               7.5e-05;
+                    n               0.5;
+                }
+            }
+        }
+
+    }
+ 
+    compositionModel singlePhaseMixture;
+
+    particleForces
+    {
+        sphereDrag;
+        gravity;
+    }
+
+    dispersionModel none;
+
+    heatTransferModel none;
+
+    phaseChangeModel liquidEvaporationBoil;
+
+    stochasticCollisionModel none;
+
+    surfaceFilmModel thermoSurfaceFilm;
+
+    radiation       off;
+
+    patchInteractionModel standardWallInteraction;
+
+    standardWallInteractionCoeffs
+    {
+        type    escape;
+    }
+
+    postProcessingModel none;
+    ranzMarshallCoeffs
+    {
+        // thermal shielding
+        BirdCorrection  true;
+    }
+    
+    patchPostProcessingCoeffs
+    {
+        maxStoredParcels    5000;
+        patches
+        (
+            sides
+            outlet
+            base
+        );
+    }
+    
+    singlePhaseMixtureCoeffs
+    {
+    phases
+    (
+        liquid
+        {
+            H2O 1;
+        }
+    );
+    }
+
+    liquidEvaporationBoilCoeffs
+    {
+        enthalpyTransfer enthalpyDifference;
+
+        activeLiquids
+        (
+            H2O 
+        );
+    }
+
+    thermoSurfaceFilmCoeffs
+    {
+        interactionType absorb;
+        deltaWetThreshold 0.0001;
+        Adry            2630;
+        Awet            1320;
+        Cf              0.6;
+        splashParcelPDF
+        {
+            pdfType         uniform;
+            uniformPDF
+            {
+                minValue        1e-04;
+                maxValue        1e-04;
+            }
+        }
+    }
+}
+
+// ************************************************************************* //

@@ -1,0 +1,43 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.4.x                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0/filmRegion";
+    object      Tf;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 0 1 0 0 0];
+
+internalField   uniform  293;
+
+boundaryField
+{
+    fuel_top
+    {
+        type            zeroGradient;
+    }
+    region0_to_filmRegion_fuel
+    {
+        type            mappedField;
+        sampleRegion    fuelRegion;
+        sampleMode      nearestPatchFace;
+        samplePatch     region0_to_fuelRegion_fuel;
+        flipNormals     yes;
+        offset          (0 0 0);
+        field           T;
+        setAverage      no;
+        average         0;
+        value           uniform 293;
+    }
+
+}
+// ************************************************************************* //

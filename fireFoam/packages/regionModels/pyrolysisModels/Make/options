@@ -1,0 +1,31 @@
+DEV_PATH = ./../..
+
+EXE_INC = \
+    -I$(LIB_SRC)/finiteVolume/lnInclude \
+    -I$(LIB_SRC)/meshTools/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/chemistryModel/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/specie/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/basic/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/solidThermo/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/solidChemistryModel/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/reactionThermo/lnInclude \
+    -I$(DEV_PATH)/thermophysicalModels/radiation/lnInclude \
+    -I$(LIB_SRC)/turbulenceModels/lnInclude \
+    -I$(LIB_SRC)/TurbulenceModels/compressible/lnInclude \
+    -I$(LIB_SRC)/regionModels/regionModel/lnInclude \
+    -I$(LIB_SRC)/transportModels/compressible/lnInclude
+
+LIB_LIBS = \
+    -lfiniteVolume \
+    -lmeshTools \
+    -lchemistryModel \
+    -lspecie \
+    -lfluidThermophysicalModels \
+    -lsolidChemistryModel \
+    -lsolidThermo \
+    -lturbulenceModels \
+    -lcompressibleTurbulenceModels \
+    -lregionModels \
+    -L$(FOAM_USER_LIBBIN) \
+    -lradiationModelsFF \
+    -lreactionThermophysicalModels

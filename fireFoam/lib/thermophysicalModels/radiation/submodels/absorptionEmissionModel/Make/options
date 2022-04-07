@@ -1,0 +1,34 @@
+DEV_PATH=./../../../../../packages
+
+EXE_INC = \
+    -I$(LIB_SRC)/finiteVolume/lnInclude \
+    -I$(LIB_SRC)/surfMesh/lnInclude \
+    -I$(LIB_SRC)/parallel/distributed/lnInclude \
+    -I$(DEV_PATH)/thermophysicalModels/radiation/lnInclude \
+    -I$(DEV_PATH)/thermophysicalModels/radiationModels/lnInclude \
+    -I$(DEV_PATH)/../lib/thermophysicalModels/combustionModels/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/basic/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/specie/lnInclude \
+    -I$(LIB_SRC)/meshTools/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/reactionThermo/lnInclude \
+    -I$(LIB_SRC)/combustionModels/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/chemistryModel/lnInclude \
+    -I$(LIB_SRC)/transportModels/compressible/lnInclude \
+    -I$(LIB_SRC)/TurbulenceModels \
+    -I$(LIB_SRC)/TurbulenceModels/turbulenceModels/lnInclude \
+    -I$(LIB_SRC)/TurbulenceModels/LES/LESdeltas/lnInclude \
+    -I$(LIB_SRC)/TurbulenceModels/LES/LESfilters/lnInclude \
+    -I$(LIB_SRC)/TurbulenceModels/compressible/turbulenceModel \
+    -I$(LIB_SRC)/TurbulenceModels/compressible/LES/lnInclude \
+    -I$(LIB_SRC)/TurbulenceModels/compressible/lnInclude
+
+
+EXE_LIBS = \
+    /* -lfiniteVolume */ \
+    /* -lmeshTools */ \
+    -lfiniteVolume \
+    -lcombustionModels \
+    -ldistributed \
+    -L$(FOAM_LIBBIN) -lreactionThermophysicalModels \
+    -L$(FOAM_USER_LIBBIN) -lradiationModelsFF  \
+    -L$(FOAM_USER_LIBBIN) -lsolidMixtureThermo21x

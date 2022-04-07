@@ -1,0 +1,8 @@
+2021-02-16: Version 21.02.16
+    Merge branch 'main' of github.com:fireFoam-release/v1912 into main
+        compiled against OpenFOAM commit 49e63378f82863f1fc56c5c6b4f0e1856b2035e9
+
+2021-01-07: Version 21.01.07
+    Initial commit - Release version 1912 of FireFOAM for GitHub
+
+

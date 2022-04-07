@@ -1,0 +1,47 @@
+DEV_PATH=./../
+DEV1_PATH=./../../packages
+
+EXE_INC = \
+    -I$(DEV1_PATH)/regionModels/surfaceFilmModels/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/SLGThermo/lnInclude\
+    -I$(LIB_SRC)/thermophysicalModels/thermophysicalProperties/lnInclude \
+    -I$(DEV_PATH)/thermophysicalModels/radiation/derivedFvPatchFields/lnInclude \
+    -I$(DEV_PATH)/regionModels/pyrolysisModels/lnInclude \
+    -I$(LIB_SRC)/finiteVolume/lnInclude \
+    -I$(LIB_SRC)/regionModels/regionModel/lnInclude \
+    -I$(DEV1_PATH)/regionModels/pyrolysisModels/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/basic/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/specie/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/solidSpecie/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/solid/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/basic/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/basicSolidThermo/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/solidThermo/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/solidChemistryModel/lnInclude \
+    -I$(LIB_SRC)/turbulenceModels/compressible/turbulenceModel \
+    -I$(LIB_SRC)/meshTools/lnInclude \
+    -I$(LIB_SRC)/turbulenceModels/compressible/turbulenceModel/lnInclude \
+    -I$(LIB_SRC)/turbulenceModels/compressible/RAS/lnInclude \
+    -I$(LIB_SRC)/turbulenceModels/compressible/LES/lnInclude \
+    -I$(LIB_SRC)/turbulenceModels/LES/LESdeltas/lnInclude \
+    -I$(LIB_SRC)/turbulenceModels//LES/LESfilters/lnInclude \
+    -I$(LIB_SRC)/TurbulenceModels/turbulenceModels/lnInclude \
+    -I$(LIB_SRC)/TurbulenceModels/compressible/lnInclude \
+    -I$(LIB_SRC)/transportModels/compressible/lnInclude/ \
+    -I$(LIB_SRC)/thermophysicalModels/specie/lnInclude \
+    -I$(LIB_SRC)/thermophysicalModels/chemistryModel/lnInclude\
+    -I$(LIB_SRC)/thermophysicalModels/reactionThermo/lnInclude \
+    -I$(DEV1_PATH)/thermophysicalModels/radiation/lnInclude \
+    -I$(LIB_SRC)/sampling/lnInclude
+     
+EXE_LIBS = \
+    -L$(FOAM_USER_LIBBIN) \
+        -lRadiationBCs_FMG \
+    -lbasicThermophysicalModels \
+    -lspecie \
+    -lfiniteVolume \
+    -lcompressibleRASModels \
+    -lcompressibleLESModels \
+    -L$(FOAM_USER_LIBBIN) \
+    -lpyrolysisModelsFF \
+    -lregionModels

@@ -1,0 +1,17 @@
+#!/bin/bash
+cd ${0%/*} || exit 1    # run from this directory
+. $WM_PROJECT_DIR/wmake/scripts/AllwmakeParseArguments
+set -x
+
+wmake libso thermophysicalModels/combustionModels
+wmakeLnInclude thermophysicalModels/radiation/derivedFvPatchFields
+wmake libso thermophysicalModels/radiation/submodels/absorptionEmissionModel	
+wmake libso thermophysicalModels/radiation/derivedFvPatchFields
+wmake libso fvPatchFields
+wmakeLnInclude regionModels/pyrolysisModels
+wmake libso fvPatchFieldsPyrolysis
+wmake libso regionCoupling
+wmake libso regionModels/pyrolysisModels
+
+
+# ----------------------------------------------------------------- end-of-file

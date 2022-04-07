@@ -1,0 +1,61 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v1806                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      alphat;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [1 -1 -1 0 0 0 0];
+
+internalField   uniform 0;
+
+boundaryField
+{
+    ground
+    {
+        type            zeroGradient;
+    }
+
+    outlet
+    {
+        type            inletOutlet;
+        inletValue      $internalField;
+        value           $internalField;
+    }
+
+    burner 
+    {
+        type            fixedValue;
+        value           $internalField;
+    }
+
+
+    region0_to_fuelRegion_fuel
+    {
+        type                    alphatScalingWallFunction;
+        correctInternal         false;
+        m60                     0.008;
+        Prt                     1.0;
+        fuelConversionRatio     3.0;
+        Cdelta1                 200;
+        Cdelta2                 0;
+        deltaMin                0.0015;
+        delta1                  0.0015;
+        delta2                  0.006;
+        floorSurface            0.6;
+        value                   uniform 0;
+    }
+}
+
+
+// ************************************************************************* //

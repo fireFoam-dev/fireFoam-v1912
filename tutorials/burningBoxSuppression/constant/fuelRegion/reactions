@@ -1,0 +1,23 @@
+species
+(
+    v
+    char
+);
+
+gaseousSpecies
+(
+    gas
+);
+
+reactions
+{
+    charReaction
+    {
+        type        irreversibleArrheniusSolidReaction;
+        reaction    "v^1.2579892 = char + gas";
+        A           3.238963e+10;
+        Ta          15725.35963;
+        Tcrit       400;
+    }
+}
+

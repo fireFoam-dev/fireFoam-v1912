@@ -1,0 +1,42 @@
+#!/bin/bash
+cd ${0%/*} || exit 1    # run from this directory
+. $WM_PROJECT_DIR/wmake/scripts/AllwmakeParseArguments
+set -x
+
+dirs=( "thermophysicalModels/radiation" "lagrangian/intermediateNew" )
+libs=( radiationModels lagrangianIntermediate )
+
+for ((i=0; i<${#libs[@]}; ++i)); do
+    libname="lib"${libs[i]}".so"
+    libnameFF="lib"${libs[i]}"FF.so"
+    libnameOF="lib"${libs[i]}"OF.so"
+
+    if [ -e $FOAM_LIBBIN/$libname ]
+    then
+        cd $FOAM_LIBBIN    
+        mv $libname $libnameOF
+        cd -
+    fi
+
+    wmake libso ${dirs[i]}
+
+    target_lib=$FOAM_USER_LIBBIN/$libnameFF
+    link_lib=$FOAM_USER_LIBBIN/$libname
+    if [ -e $target_lib ]; then
+        if [ ! "$(readlink $link_lib)" -ef "$target_lib" ]; then
+            cd $FOAM_USER_LIBBIN
+            rm -f $libname
+            ln -s $libnameFF $libname
+        fi
+        cd -
+    else
+        rm -f $link_lib
+    fi
+
+    if [ $i -eq 0 ]; then
+        ./regionModels/Allwmake
+    fi 
+
+done
+
+# ----------------------------------------------------------------- end-of-file

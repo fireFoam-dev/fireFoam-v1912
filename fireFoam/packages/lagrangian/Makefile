@@ -1,0 +1,2 @@
+default:
+	wmake libso intermediateNew

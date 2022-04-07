@@ -1,0 +1,58 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.4.x                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volVectorField;
+    location    "0";
+    object      U;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 1 -1 0 0 0 0];
+
+internalField   uniform (0 0 0);
+
+boundaryField
+{
+    ground
+    {
+        type            fixedValue;
+        value           $internalField;
+    }
+    outlet
+    {
+        type            pressureInletOutletVelocity;
+        value           $internalField;
+    }
+
+    burner
+    {
+        type            flowRateInletVelocity;
+        massFlowRate    table
+        (
+            (0   0.000) // 
+            (1   0.0025) // 
+//            (89   0.0025) //
+//            (90   0.000) // 
+        );
+        value           uniform (0 0 0);
+    }
+
+    region0_to_fuelRegion_fuel
+    {
+        type            flowRateInletVelocityPyrolysisCoupled;
+        phi             phi;
+        nbrPhi          phiGas;
+        rho             rho;
+        hocSolid        1.66e7; 
+        value           uniform (0 0 0);
+    }
+}
+// ************************************************************************* //

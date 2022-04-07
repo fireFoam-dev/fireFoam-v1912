@@ -1,0 +1,10 @@
+nutUSpaldingBlowingWallFunction/nutUSpaldingBlowingWallFunctionFvPatchScalarField.C
+
+constHTemperature/constHTemperatureFvPatchScalarField.C 
+
+/*kvm, need to get this working with dev version*/
+nutFireWallFunction/nutFireWallFunctionFvPatchScalarField.C
+nutPyrolysisWallFunction/nutPyrolysisWallFunctionFvPatchScalarField.C
+alphatScalingWallFunction/alphatScalingWallFunctionFvPatchScalarField.C
+
+LIB = $(FOAM_USER_LIBBIN)/libpatchFieldsFireFOAM
