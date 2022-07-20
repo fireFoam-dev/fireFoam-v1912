@@ -34,7 +34,7 @@ boundaryField
 
     region0_to_fuelRegion_fuel
     {
-        type                compressible::corrugatedCardboardSuppression;
+        type                compressible::filmPyrolysisTemperatureCoupledFF;
         filmRegion          filmRegion;
         pyrolysisRegion     fuelRegion;
         Tnbr                T;
