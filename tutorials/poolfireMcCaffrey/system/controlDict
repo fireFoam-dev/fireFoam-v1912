@@ -100,7 +100,6 @@ functions
         writeInterval   5.0;
         restartOnRestart false;
         restartOnOutput   false;
-        periodicRestart true;
         periodicRestart false;
         //restartPeriod   10.0;
         timeStart               20.0;
