@@ -23,9 +23,8 @@ do
 done
 
 
-cp 0/ph_rgh-orig 0/ph_rgh
+cp 0/ph_rgh.orig 0/ph_rgh
 
 runApplication decomposePar -force
-runParallel fireFoam
 
 #------------------------------------------------------------------------------
