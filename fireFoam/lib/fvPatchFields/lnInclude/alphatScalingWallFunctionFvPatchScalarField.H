@@ -1,1 +1,0 @@
-../alphatScalingWallFunction/alphatScalingWallFunctionFvPatchScalarField.H
