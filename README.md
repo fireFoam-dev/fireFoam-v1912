@@ -139,3 +139,5 @@ Purpose of case:
         - Spray
         - Film
 
+# Issues
+Issues with installation, tutorials, code behavior and documentation can be opened, tagged and tracked via "Issues" tab at the top of the page.
