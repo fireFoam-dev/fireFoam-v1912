@@ -1,8 +1,0 @@
-SOURCE = \
-nutUSpaldingBlowingWallFunction/nutUSpaldingBlowingWallFunctionFvPatchScalarField.C \
-constHTemperature/constHTemperatureFvPatchScalarField.C \
-nutFireWallFunction/nutFireWallFunctionFvPatchScalarField.C \
-nutPyrolysisWallFunction/nutPyrolysisWallFunctionFvPatchScalarField.C \
-alphatScalingWallFunction/alphatScalingWallFunctionFvPatchScalarField.C \
-
-# sources
