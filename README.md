@@ -23,7 +23,7 @@ chmod +x fireFoam_setup.bash
 ./fireFoam_setup.bash > install_log.txt &
 ```
 - The downloading of ThirdParty from SourceForge sometimes fails. In this case, simply repeat step 4. 
-- Occasionally there may be an issue midway through the installation process. The script can be re-run without repeating successfully completed sections by specifying the `START_STEP` parameter as something other than `1`. See comments in the script for details.
+- Occasionally there may be an issue midway through the installation process. The script can be re-run without repeating successfully completed sections by specifying the `START_STEP` parameter based on the steps in the `fireFoam_setup.bash` script. See comments in the script for details.
 
 After following these steps, the directory should look as follows:
 ```
