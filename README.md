@@ -1,5 +1,5 @@
 # FireFOAM
-This is the public-facing release of the Fire Modeling team at FM Global's customized version of the FireFOAM solver for CFD simulations of fires. It is based on the ESI/OpenFOAM-v1912 implementation. The key external dependencies are [ESI/OpenFOAM](https://develop.openfoam.com/Development/openfoam.git)-v1912 and [ESI/ThirdParty](https://sourceforge.net/projects/openfoam/files/)-v1912.
+This is the public-facing release of the Fire Modeling team at FM Global's customized version of the FireFOAM solver for CFD simulations of fires. It is based on the ESI/OpenFOAM-v1912 implementation. The key external dependencies are [ESI/OpenFOAM](https://develop.openfoam.com/Development/openfoam.git)-v1912 and [ESI/ThirdParty](https://sourceforge.net/projects/openfoam/files/)-v1912. See also our [company website](https://www.fmglobal.com/research-and-resources/research-and-testing/theoretical-computational-and-experimental-research/open-source-fire-modeling).
 
 # Installation instructions
 We will install ESI/ThirdParty, ESI/OpenFOAM and FM-public/FireFOAM in a case-sensitive drive on a Linux machine at a location `/path/to/FM-public-FF/`.
