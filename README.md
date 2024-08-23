@@ -68,7 +68,9 @@ source /path/to/FM-public-FF/OpenFOAM-v1912/etc/bashrc
 7. Use other scripts, e.g., `postproc.sh` and `reconstruct.sh`, to perform initial analysis of the data.
 
 ## Case: poolfireMcCaffrey
-58kW methane gas pool fire from McCaffrey's experiments. Simuation described in:
+A 30cm x 30cm square burner injects gaseous methane into the gaseous domain at a rate equivalent to 58kW of mean heating power when the methane has fully combusted. The methane combusts with the ambient air.
+
+This tutorial is a simulation of the 58kW methane gas pool fire from McCaffrey's experiments, described in:
 
 [1] https://github.com/MaCFP/macfp-db/tree/master/Gaseous_Pool_Fires/McCaffrey_Flames/Computational_Results/2017/FMGlobal
 
@@ -76,25 +78,9 @@ source /path/to/FM-public-FF/OpenFOAM-v1912/etc/bashrc
     DOI: 10.1016/j.proci.2010.07.031
 
 ## Case: burningBoxSuppression
-Description:
+Two cardboard boxes are floating above the ground, one on top of the other. Each box is 20 cubic inches. A burner is centered on the ground and beneath the boxes box, injecting gaseous methane into the gaseous domain at a rate that ramps from zero to the equivalent of 140kW when the methane has fully combusted with the ambient air. A sprinker, modeled as a water injector, is centered above the upper box, with a flow rate of 0.1 kg/s. The injector is turned on after 90 seconds of simulation time, creating a film on the boxes and suppressing the fire. The purpose of the case is to demonstrate the coupling among pyrolysis, combustion, radiation, water spray and water film.
 
-
-    Two cardboard boxes floating above ground
-
-    Each box is 20 inch cube
-
-    Burner centered in ground and beneath box, ~110kW
-
-    Injector centered above box, 0.1 kg/s
-
-    Order of events:
-
-    * START
-    * 0  s    : burner on
-    * 90 s    : injector on
-    * END
-
-Configuration: 
+Configuration diagram: 
 
         
              o          <------ Sprinkler
@@ -128,16 +114,5 @@ Configuration:
              |
            Burner  
 
-   
-Purpose of case:
-
-    Demonstrate coupling between:
-
-        - Pyrolysis
-        - Combustion
-        - Radiation
-        - Spray
-        - Film
-
 # Issues
-Issues with installation, tutorials, code behavior and documentation can be opened, tagged and tracked via "Issues" tab at the top of the page.
+Issues with installation, tutorials, code behavior and documentation can be opened, tagged and tracked via the "Issues" tab at the top of the page.
